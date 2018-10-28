@@ -1,0 +1,54 @@
+tic;
+close all;
+clear all;
+lamdaA=1/95500;
+lamdaB=1/290000;
+time=25000;
+pA0=exp(-lamdaA*time);
+pB0=exp(-lamdaB*time);
+pA1=(1-pA0)*0.23;
+pA2=(1-pA0)*0.27;
+pA3=(1-pA0)*0.50;
+pB1=(1-pB0)*0.73;
+pB2=(1-pB0)*0.27;
+PF=pA0*pB0;
+MO=pA0*pB1+pA2*pB1;
+SO=pA0*pB2+pA1*pB0+pA1*pB2;
+FB=pA1*pB1;
+DM=pA2*pB0;
+DN=pA2*pB2+pA3*(pB0+pB1+pB2);
+n=4;
+k=4;
+while(n<=12)
+    available=0;
+    C8=(1-FB-MO)^n;
+    sigma0=0;
+    i=1;
+    while(i<=k-1)
+        sigma0=sigma0+nchoosek(k-1,i)*PF^i*SO^(k-i-1);
+        i=i+1;
+    end;
+    C9=nchoosek(n,k-1)*(PF+SO)^(k-1)*(1-PF-SO)^(n-k+1)*sigma0*(1-(1-DM)^(n-k+1));
+    available=available+(C8*C9*DM/(DM+PF));
+    i = (k-1);
+    sigma1=0;
+    while(i<=n-1)
+        sigma1=sigma1+nchoosek(n-1,i)*((PF+SO)/(1-FB))^i*(1-(PF+SO)/(1-FB))^(n-1-i);
+        i=i+1;
+    end;
+    C6=nchoosek(n,1)*MO*(1-FB-MO)^(n-1)*sigma1;
+    sigma2=0;
+    sigma3=0;
+    i=k-1;
+    while(i<=n)
+        sigma2=sigma2+nchoosek(n,i)*((PF+SO)/(1-FB))^i*(1-(PF+SO)/(1-FB))^(n-i);
+        sigma3=sigma3+nchoosek(n,i)*(SO/(1-FB))^i*(1-SO/(1-FB))^(n-i-1);
+        i=i+1;
+    end;
+    C7=(1-MO-FB)^n*(1-(1-PF/(1-FB))^n)*sigma2+(1-MO-PF-FB)^n*(1-(1-DM/(1-FB))^n)*sigma3;
+    available=available+C6+C7;
+    disp(n);
+   disp(available);
+    n=n+1;
+end;
+toc;
