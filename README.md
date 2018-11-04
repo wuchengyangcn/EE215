@@ -1,4 +1,4 @@
-# EE215: Modeling and Simulation of Engineering Issues
+# Systematic Evaluation & Optimization in Manufacturing Scenarios
 + generic algorithm: Implement *Genetic Algorithm* to solve the NP hard *Knapsack Problem*
 + calibration: Combine *Genetic Algorithm* with *Spline Fitting* to reduce the calibration cost for nonlinear measurement equipment in massive manufacturing.
 + sonar: Implement *Monte Carlo method* for simulating *Markov Chain* to assess reliability of clock synchronization in a multi-node SONAR system and carry out system optimization.
